@@ -1,0 +1,17 @@
+on:
+  push:
+    branches: master
+
+jobs:
+  test_job:
+    runs-on: ubuntu-latest
+    name: Test action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test build & push
+        uses: ./
+        with:
+          image: 'edspc/git:alpine'
+          context: 'test'
+          docker_auth: ${{ secrets.DOCKER_USER }}:${{ secrets.DOCKER_TOKEN }}

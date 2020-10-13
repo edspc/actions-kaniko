@@ -1,0 +1,25 @@
+name: 'Build dockerfile via Kaniko'
+
+inputs:
+  image:
+    description: 'Image with tag.'
+    required: true
+  dockerfile:
+    description: 'Path to Dockerfile in context.'
+    required: false
+    default: 'Dockerfile'
+  context:
+    description: 'Path to context.'
+    required: false
+    default: '.'
+  docker_auth:
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    DOCKER_AUTH: '${{ inputs.docker_auth }}'
+    BUILD_CONTEXT: '${{ inputs.context }}'
+    BUILD_DOCKERFILE: '${{ inputs.context }}/${{ inputs.dockerfile }}'
+    PUBLISH_IMAGE: '${{ inputs.image }}'
